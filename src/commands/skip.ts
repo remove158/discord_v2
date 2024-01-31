@@ -1,6 +1,5 @@
 
 import { SlashCommandBuilder, type Interaction, type CacheType, Client, EmbedBuilder } from "discord.js"
-import { model } from "../utils/gemini"
 import type { Manager } from "erela.js"
 import { builder } from "../utils/embed"
 
