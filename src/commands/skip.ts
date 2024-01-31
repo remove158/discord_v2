@@ -16,7 +16,7 @@ const handler = {
 		if (!interaction.isChatInputCommand()) return
 
 		const player = manager.players.get(interaction.channelId)
-		if (!player || !player.queue.length) return await interaction.editReply({embeds:[builder('ไม่มีเพลงที่เล่นอยู่', 'ไม่สามารถข้ามได้เนื่องจากไม่มีเพลงที่เล่นอยู่')]})
+		if (!player?.playing) return await interaction.editReply({embeds:[builder('ไม่มีเพลงที่เล่นอยู่', 'ไม่สามารถข้ามได้เนื่องจากไม่มีเพลงที่เล่นอยู่')]})
 		
 		
 		const song = player.queue.at(0)
