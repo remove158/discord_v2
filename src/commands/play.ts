@@ -54,7 +54,7 @@ const handler = {
 		}
 
 		await interaction.editReply({
-			embeds: [builder('เพิ่มเพลง', result.tracks[0].title).setThumbnail(result.tracks[0].thumbnail)
+			embeds: [builder('เพิ่มเพลง', `[${result.tracks[0].title}](${result.tracks[0].uri})`).setThumbnail(result.tracks[0].thumbnail)
 			]
 		})
 

@@ -13,6 +13,11 @@ export function createManager(client: Client<boolean>) {
 			password: "password",
 			port: 2333,
 			secure: false,
+		}, {
+			host: "player",
+			password: "password",
+			port: 2333,
+			secure: false,
 		}]
 		, send(id, payload) {
 			const guild = client.guilds.cache.get(id);

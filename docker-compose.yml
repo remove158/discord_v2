@@ -1,10 +1,16 @@
 version: "3.8"
 
 services:
-  lavalink:
+  backend:
+    links:
+      - player
+    depends_on:
+      - player
+    build: .
+  player:
     # pin the image version to Lavalink v4
     image: ghcr.io/lavalink-devs/lavalink:3.7.10
-    container_name: lavalink
+    container_name: player
     restart: unless-stopped
     environment:
       # set Java options here
@@ -14,15 +20,9 @@ services:
       - SERVER_ADDRESS=0.0.0.0
       # set password for lavalink
       - LAVALINK_SERVER_PASSWORD=password
-    networks:
-      - lavalink
     expose:
       # lavalink exposes port 2333 to connect to for other containers (this is for documentation purposes only)
       - 2333
     ports:
       # you only need this if you want to make your lavalink accessible from outside of containers
       - "2333:2333"
-networks:
-  # create a lavalink network you can add other containers to, to give them access to Lavalink
-  lavalink:
-    name: lavalink
