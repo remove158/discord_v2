@@ -1,7 +1,6 @@
 import { SlashCommandBuilder, type Interaction, type CacheType, Client } from "discord.js"
 import type { Manager } from "erela.js"
 import { builder } from "../utils/embed"
-import { Player } from "erela.js"
 
 
 
@@ -25,30 +24,30 @@ const handler = {
 			embeds: [builder('ไม่พบเพลง', `ไม่พบผลการค้นหา: ${query}`)
 			]
 		})
-		let player : Player | undefined = manager.players.get(guild_id)
-		if (! player) {
-			// console.log('Create new player for' , voice_channel_id);
+
 			
-			player = manager.create({
+		const	player = manager.create({
 				guild: guild_id,
 				voiceChannel: voice_channel_id,
 				textChannel: text_channel_id,
 				selfDeafen: true,
 			});
-		}
 		
 		if (player.state !== "CONNECTED") {
+			console.log('Connect bot to', voice_channel_id)
 			await player.connect();
 		}
 
-		const result = await player.search(query)
+		const result = await player.search(query, interaction.user)
 		if (result.tracks.length == 0) {
 			await interaction.editReply({ embeds: [builder('ไม่พบเพลง', `ไม่พบเพลง ${query}`)] })
 		}
 
 		player.queue.add(result.tracks[0]); // add track
+		console.log(`Add track ${result.tracks[0].title} to`, voice_channel_id, `(total ${player.queue.totalSize})`)
 		if(!player?.queue?.totalSize || (!player.paused && !player.playing)) { 
 			player.play()
+			console.log(`Channel ${voice_channel_id} just playing a music`)
 			if (!player.paused && !player.playing) player.pause(false)
 		}
 
