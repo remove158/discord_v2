@@ -15,8 +15,8 @@ const handler = {
 
 		if (!interaction.isChatInputCommand()) return
 
-		const player = manager.players.get(interaction.channelId)
-		if (!player || !player.playing) return await silentMessage(interaction,'ข้ามเพลงไม่ได้', 'ข้ามไม่ได้เนื่องจากไม่มีเพลงที่กำลังเล่น')
+		const player = manager.players.get(interaction.guildId ?? "")
+		if (!player || ! player.playing)  return await silentMessage(interaction,'ข้ามเพลงไม่ได้', 'ข้ามไม่ได้เนื่องจากไม่มีเพลงที่กำลังเล่น')
 
 		player.stop()
 		await silentMessage(interaction,'ข้ามเพลง', 'ข้ามเพลงเรียบร้อยแล้ว')
