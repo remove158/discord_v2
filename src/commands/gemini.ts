@@ -20,6 +20,7 @@ const handler = {
 		const prompt = interaction.options.get('prompt', true).value as string
 
 
+	
 		const result = await model.generateContent(prompt);
 		const response = await result.response;
 

@@ -4,6 +4,7 @@ import 'dotenv/config'
 import { CLIENT_ID, TOKEN } from './utils/discord';
 import { COMMANDS, COMMANDS_COLLECTION } from './utils/commands';
 import { createManager } from './utils/erela';
+import { silentMessage } from './utils/message';
 
 // create a new Client instance
 const client = new Client({
@@ -34,7 +35,7 @@ client.once(Events.ClientReady, (c) => {
 
 
 client.on(Events.InteractionCreate, async interaction => {
-	if (interaction.type !== InteractionType.ApplicationCommand) return
+	if (!interaction.isChatInputCommand()) return
 	const command = COMMANDS_COLLECTION.get(interaction.commandName)
 
 	try {
@@ -45,7 +46,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	} catch (err) {
 		console.error(err)
-		await interaction.editReply("ERROR")
+		await silentMessage(interaction, 'ERROR' , `Some thing went wrong with '${interaction.commandName}'` )
 
 	}
 
