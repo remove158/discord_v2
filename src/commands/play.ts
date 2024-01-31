@@ -16,7 +16,9 @@ const handler = {
 		if (!interaction.isChatInputCommand()) return
 		const query = interaction.options.get('query', true).value as string
 		const user = interaction.member?.user
-		const voice_channel_id = (interaction as any).member.voice.channel.id
+		const voice_channel_id = (interaction as any)?.member?.voice?.channel?.id
+
+		if (! voice_channel_id) return await interaction.editReply({embeds:[builder('คุณไม่ได้อยู่ใน Voice Channel','กรุณาเข้า Voice Channel')]})
 
 		const guild_id = interaction.guildId
 		const text_channel_id = interaction.channelId
