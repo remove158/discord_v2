@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, type Interaction, type CacheType, Client } from "discord.js"
 import type { Manager } from "erela.js"
-import { builder, silentMessage } from "../utils/message"
+import { builder, silentMessage, silentMessageWithThumbnail } from "../utils/message"
 
 
 
@@ -48,7 +48,7 @@ const handler = {
 			player.play()
 			if (!player.paused && !player.playing) player.pause(false)
 		}
-		await silentMessage(interaction, 'เพิ่มเพลง',  `[${result.tracks[0].title}](${result.tracks[0].uri})`)
+		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${result.tracks[0].title}](${result.tracks[0].uri})`, result.tracks[0].thumbnail ?? "")
 
 
 	}
