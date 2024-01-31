@@ -39,7 +39,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	try {
 		if (!command) return
-		await interaction.deferReply()
+		// await interaction.deferReply()
 		console.log(`${interaction.member?.user.username} > ${interaction.commandName}`)
 		await command.execute(interaction, client, MANAGER)
 

@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, type Interaction, type CacheType, Client, EmbedBuilder } from "discord.js"
 import { model } from "../utils/gemini"
 import type { Manager } from "erela.js"
-import { builder } from "../utils/embed"
+import { builder, silentMessage } from "../utils/message"
 
 
 
@@ -25,12 +25,7 @@ const handler = {
 
 		const text = response.text();
 
-
-
-
-		await interaction.editReply({
-			embeds: [builder(`Prompt: ${prompt}`, text)]
-		})
+		await silentMessage(interaction, `Prompt: ${prompt}`, text )
 
 	}
 }
