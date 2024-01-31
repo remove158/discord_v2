@@ -11,24 +11,18 @@ const handler = {
 		.setDescription('Skip current song')
 
 	,
-	async execute(interaction: Interaction<CacheType>, client: Client, manager : Manager) {
+	async execute(interaction: Interaction<CacheType>, client: Client, manager: Manager) {
 
 		if (!interaction.isChatInputCommand()) return
 
 		const player = manager.players.get(interaction.channelId)
-		if (!player?.playing) return await interaction.editReply({embeds:[builder('ไม่มีเพลงที่เล่นอยู่', 'ไม่สามารถข้ามได้เนื่องจากไม่มีเพลงที่เล่นอยู่')]})
-		
-		
-		const song = player.queue.at(0)
+		if (!player || !player.playing) return await interaction.editReply({ embeds: [builder('ข้ามเพลงไม่ได้', 'ข้ามไม่ได้เนื่องจากไม่มีเพลงที่กำลังเล่น')] })
 
-		if (song) {
-			player.stop()
-			await interaction.editReply({
-				embeds: [builder(`ข้ามเพลง`, `ข้ามเพลง ${song.title}`)]
-			})
-		}
+		player.stop()
+		await interaction.editReply({
+			embeds: [builder(`ข้ามเพลง`, `ข้ามเพลงเรียบร้อยแล้ว`)]
+		})
 
-		return await interaction.editReply({embeds:[builder('ไม่มีเพลงที่เล่นอยู่', 'ไม่สามารถข้ามได้เนื่องจากไม่มีเพลงที่เล่นอยู่')]})
 
 	}
 }
