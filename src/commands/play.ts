@@ -20,34 +20,34 @@ export default {
 		const user = interaction.member?.user
 		const vcId = (interaction.member as GuildMember)?.voice?.channelId;
 
-		if (!vcId) return await silentMessage(interaction,'คุณไม่ได้อยู่ใน Voice Channel', 'กรุณาเข้า Voice Channel')
-
+		if (!vcId) return interaction.reply({ ephemeral: true, content: `ต้องอยู่ใน voice channel` });
 		const vc = (interaction.member as GuildMember)?.voice?.channel as VoiceChannel;
-		if(!vc.joinable || !vc.speakable) return  await silentMessage(interaction, "Fail", "I am not able to join your channel / speak in there." );
+		if(!vc.joinable || !vc.speakable) return interaction.reply({ ephemeral: true, content: "I am not able to join your channel / speak in there." });
 		const guild_id = interaction.guildId
 		const txId = interaction.channelId
-		if (!user || !guild_id || !vc || !txId) return await silentMessage(interaction,'Fail', `Something went wrong`)
+		if (!user || !guild_id || !vc || !txId) return  interaction.reply({ content: `เล่นเพลงไม่ได้ กรุณาลองใหม่ภายหลัง`, ephemeral: true });
 		
-
-
+		
+		
 		const player = client.lavalink.getPlayer(guild_id) || client.lavalink.createPlayer({
-            guildId: guild_id, 
+			guildId: guild_id, 
             voiceChannelId: vcId, 
             textChannelId: txId, 
             selfDeaf: true, 
             selfMute: false,
             volume: client.defaultVolume,  
             applyVolumeAsFilter: false
-      
+			
         });
         
+		if(player.voiceChannelId !== vcId) return interaction.reply({ ephemeral: true, content: "You need to be in my Voice Channel" });
         const connected = player.connected;
 
         if(!connected) await player.connect();
 
 		const response =  await player.search(query, interaction.user)
 		if (!response || !response.tracks?.length  || response.tracks.length == 0) {
-			await silentMessage(interaction,'ไม่พบเพลง', `ไม่พบเพลง ${query}`)
+			return interaction.reply({ content: `ไม่พบเพลง ${query}`, ephemeral: true });
 		}
 
 		player.queue.add(response.tracks[0]); // add track
@@ -55,7 +55,7 @@ export default {
 		const track =  response.tracks[0].info
 		const duration = formatMS_HHMMSS(track.duration)
 		
-		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${track.title}](${track.uri}) \`${duration}\``, track.artworkUrl ?? "")
+		return silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${track.title}](${track.uri}) \`${duration}\``, track.artworkUrl ?? "")
 
 
 	}

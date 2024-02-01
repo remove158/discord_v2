@@ -8,6 +8,7 @@ services:
       - player
     build: .
     restart: always
+    env_file: ".env"
   player:
     # pin the image version to Lavalink v4
     image: ghcr.io/lavalink-devs/lavalink:4

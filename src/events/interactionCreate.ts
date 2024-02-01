@@ -18,8 +18,7 @@ export default {
 	
 		} catch (err) {
 			console.error(err)
-			await silentMessage(interaction, 'ERROR' , `Some thing went wrong with '${interaction.commandName}'` )
-	
+			return interaction.reply({ ephemeral: true, content: `Some thing went wrong with '${interaction.commandName}'`  });
 		}
 	} 
 } as Event
