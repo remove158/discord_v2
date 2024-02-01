@@ -55,7 +55,7 @@ export default {
 		const track =  response.tracks[0].info
 		const duration = formatMS_HHMMSS(track.duration)
 		
-		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${track.title}](${track.uri}) (${duration})`, track.artworkUrl ?? "")
+		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${track.title}](${track.uri}) \`${duration}\``, track.artworkUrl ?? "")
 
 
 	}
