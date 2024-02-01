@@ -22,10 +22,11 @@ export default {
         const nextTrack = player.queue.tracks[0];
 
 
-		if (!nextTrack) return await player.destroy()
-        
-
-        await player.skip((interaction.options as CommandInteractionOptionResolver).getInteger("skipto", false) || 0);
+		if (!nextTrack) {
+			await player.destroy()
+		} else {
+			await player.skip((interaction.options as CommandInteractionOptionResolver).getInteger("skipto", false) || 0);
+		}
 
 		await silentMessage(interaction,
            "ข้ามเพลง", nextTrack ? 

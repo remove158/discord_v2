@@ -2,6 +2,7 @@ import { SlashCommandBuilder, type Interaction, type CacheType, Client, GuildMem
 import type { Manager } from "erela.js"
 import { builder, silentMessage, silentMessageWithThumbnail } from "../utils/message"
 import { Command } from "@/types/Client"
+import { formatMS_HHMMSS } from "@/utils/time"
 
 
 
@@ -51,8 +52,10 @@ export default {
 
 		player.queue.add(response.tracks[0]); // add track
 		if ( !player.playing)  await player.play()
+		const track =  response.tracks[0].info
+		const duration = formatMS_HHMMSS(track.duration)
 		
-		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${response.tracks[0].info.title}](${response.tracks[0].info.uri}) (${response.tracks[0].info.duration})`, response.tracks[0].info.artworkUrl ?? "")
+		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${track.title}](${track.uri}) (${duration})`, track.artworkUrl ?? "")
 
 
 	}
