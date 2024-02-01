@@ -37,6 +37,10 @@ export function createManager(client: Client<boolean>) {
     .on("nodeReconnect", (node) => {
         console.log(`The Node: ${node.options.identifier} on host: ${node.options.host} is now attempting a reconnect`);
     })
+	.on("queueEnd", (player) => {
+		player.queue.clear()
+		player.destroy()
+	})
     // .on("nodeDisconnect", (node) => {
     //     console.error(`Connection of the Node: ${node.options.identifier} on host: ${node.options.host}, disconnected`);
     // })
