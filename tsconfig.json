@@ -15,7 +15,7 @@
 				"./src/*"
 			],
 			"@types/*" : ["./src/types/*"],
-			"@handlers/*" : ["src/handlers/*"],
+			"@handlers/*" : ["./src/handlers/*"],
 			"@utils/*" : ["./src/utils/*"],
 		},
 		"esModuleInterop": true,

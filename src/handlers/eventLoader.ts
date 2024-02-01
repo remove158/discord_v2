@@ -3,8 +3,9 @@ import { join } from "node:path";
 import { BotClient, Event } from "@/types/Client";
 
 export async function loadEvents(client:BotClient) {
-    const path = join(process.cwd(), "events");
+    const path = join(process.cwd(), "src/events");
     const files = readdirSync(path).filter(file => file.endsWith(".ts") || file.endsWith(".js"));
+	console.log(`Loading ${files.length} Events`);
     for(const file of files) {
         const filePath = join(path, file)
         const cmd = await import(filePath).then(v => v.default) as Event;

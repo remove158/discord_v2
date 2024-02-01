@@ -20,6 +20,9 @@ export default {
         
         const current = player.queue.current;
         const nextTrack = player.queue.tracks[0];
+
+
+		if (!nextTrack) return await player.destroy()
         
 
         await player.skip((interaction.options as CommandInteractionOptionResolver).getInteger("skipto", false) || 0);

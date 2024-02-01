@@ -7,6 +7,7 @@ import { loadCommands } from "@handlers/commandLoader";
 import { loadEvents } from "@handlers/eventLoader";
 import { myCustomStore } from "@utils/store";
 import { createClient } from "redis";
+import { loadLavalinkEvents } from "@/lavalinkEvents";
 
 const client = new Client({
 	intents: [
@@ -44,3 +45,7 @@ client.defaultVolume = 100
 
 loadCommands(client)
 loadEvents(client)
+loadLavalinkEvents(client)
+
+
+client.login(envConfig.token)
