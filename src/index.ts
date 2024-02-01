@@ -1,73 +1,46 @@
-// import discord.js
-import { Client, Collection, Events, GatewayIntentBits, InteractionType, } from 'discord.js';
-import 'dotenv/config'
-import { CLIENT_ID, TOKEN } from './utils/discord';
-import { COMMANDS, COMMANDS_COLLECTION } from './utils/commands';
-import { createManager } from './utils/erela';
-import { silentMessage } from './utils/message';
+import { envConfig } from "@/config";
+import { BotClient } from "@/types/Client";
+import { Client, GatewayIntentBits } from "discord.js";
+import { LavalinkManager, parseLavalinkConnUrl } from "lavalink-client";
 
-// create a new Client instance
+import { loadCommands } from "@handlers/commandLoader";
+import { loadEvents } from "@handlers/eventLoader";
+import { myCustomStore } from "@utils/store";
+import { createClient } from "redis";
+
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds,
-	GatewayIntentBits.GuildMessages,
-	GatewayIntentBits.GuildVoiceStates]
-});
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessages
+	]
+}) as BotClient;
+
+if (envConfig.redis.url ) {
+	client.redis = createClient({ url: envConfig.redis.url, password: envConfig.redis.password });
+	client.redis.connect();
+	client.redis.on("error", (err) => console.log('Redis Client Error', err));
+} else {
+	throw new Error("Redis not found");
+}
+
+const LavalinkNodesOfEnv = process.env.LAVALINKNODES?.split(" ").filter(v => v.length).map(url => parseLavalinkConnUrl(url));
 
 
-const MANAGER = createManager(client)
-
-
-client.application?.commands.set(COMMANDS.map(e => e.data))
-
-
-
-// listen for the client to be ready
-client.once(Events.ClientReady, (c) => {
-	console.log(`Ready! Logged in as ${c.user.tag}`);
-
-	console.log(`Started refreshing ${COMMANDS.length} application (/) commands.`)
-	client.application?.commands.set(COMMANDS.map(e => e.data))
-	console.log(`Successfully reloaded ${COMMANDS.length} application (/) commands.`)
-
-	MANAGER.init(CLIENT_ID)
-
-});
-
-
-client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return
-	const command = COMMANDS_COLLECTION.get(interaction.commandName)
-
-	try {
-		if (!command) return
-		// await interaction.deferReply()
-		console.log(`${interaction.member?.user.username} > ${interaction.commandName}`)
-		await command.execute(interaction, client, MANAGER)
-
-	} catch (err) {
-		console.error(err)
-		await silentMessage(interaction, 'ERROR' , `Some thing went wrong with '${interaction.commandName}'` )
-
+client.lavalink = new LavalinkManager({
+	nodes: LavalinkNodesOfEnv,
+	sendToShard: (guildId, payload) => client.guilds.cache.get(guildId)?.shard?.send(payload),
+	client: {
+		id: envConfig.clientId
+	},
+	queueOptions: {
+		queueStore: new myCustomStore(client.redis)
 	}
-
 })
 
-client.on(Events.ChannelDelete, channel => {
-	const player = MANAGER.players.get(channel.id)
-    if(!player) return;
-    if(channel.id === player.voiceChannel) player.destroy();
-    if(channel.id === player.textChannel) player.textChannel = null;
-})
+client.defaultVolume = 100
 
-client.on(Events.GuildDelete, channel => {
-	const player = MANAGER.players.get(channel.id)
-	if(!player) return; 
-	player.destroy();
-})
 
-client.on(Events.Raw, data => {
-	MANAGER.updateVoiceState(data);
-})
-
-// login with the token from .env.local
-client.login(TOKEN);
+loadCommands(client)
+loadEvents(client)

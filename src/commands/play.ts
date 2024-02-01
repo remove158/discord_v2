@@ -1,10 +1,11 @@
-import { SlashCommandBuilder, type Interaction, type CacheType, Client } from "discord.js"
+import { SlashCommandBuilder, type Interaction, type CacheType, Client, GuildMember, VoiceChannel } from "discord.js"
 import type { Manager } from "erela.js"
 import { builder, silentMessage, silentMessageWithThumbnail } from "../utils/message"
+import { Command } from "@/types/Client"
 
 
 
-const handler = {
+export default {
 	data: new SlashCommandBuilder()
 		.setName("play")
 		.setDescription('play music')
@@ -12,45 +13,47 @@ const handler = {
 			option.setName('query')
 				.setDescription('song name or url').setRequired(true))
 	,
-	async execute(interaction: Interaction<CacheType>, client: Client, manager: Manager) {
+	execute: async (client, interaction) => {
 		if (!interaction.isChatInputCommand()) return
 		const query = interaction.options.get('query', true).value as string
 		const user = interaction.member?.user
-		const voice_channel_id = (interaction as any)?.member?.voice?.channel?.id
+		const vcId = (interaction.member as GuildMember)?.voice?.channelId;
 
-		if (!voice_channel_id) return await silentMessage(interaction,'คุณไม่ได้อยู่ใน Voice Channel', 'กรุณาเข้า Voice Channel')
+		if (!vcId) return await silentMessage(interaction,'คุณไม่ได้อยู่ใน Voice Channel', 'กรุณาเข้า Voice Channel')
 
+		const vc = (interaction.member as GuildMember)?.voice?.channel as VoiceChannel;
+		if(!vc.joinable || !vc.speakable) return  await silentMessage(interaction, "Fail", "I am not able to join your channel / speak in there." );
 		const guild_id = interaction.guildId
-		const text_channel_id = interaction.channelId
-		if (!user || !guild_id || !voice_channel_id || !text_channel_id) return await silentMessage(interaction,'ไม่พบเพลง', `ไม่พบผลการค้นหา: ${query}`)
+		const txId = interaction.channelId
+		if (!user || !guild_id || !vc || !txId) return await silentMessage(interaction,'Fail', `Something went wrong`)
 		
 
 
-		const player = manager.create({
-			guild: guild_id,
-			voiceChannel: voice_channel_id,
-			textChannel: text_channel_id,
-			selfDeafen: true,
-		});
+		const player = client.lavalink.getPlayer(guild_id) || client.lavalink.createPlayer({
+            guildId: guild_id, 
+            voiceChannelId: vcId, 
+            textChannelId: txId, 
+            selfDeaf: true, 
+            selfMute: false,
+            volume: client.defaultVolume,  
+            applyVolumeAsFilter: false
+      
+        });
+        
+        const connected = player.connected;
 
-		if (player.state !== "CONNECTED") {
-			console.log('Connect bot to', voice_channel_id)
-			await player.connect();
-		}
+        if(!connected) await player.connect();
 
-		const result = await player.search(query, interaction.user)
-		if (result.tracks.length == 0) {
+		const response =  await player.search(query, interaction.user)
+		if (!response || !response.tracks?.length  || response.tracks.length == 0) {
 			await silentMessage(interaction,'ไม่พบเพลง', `ไม่พบเพลง ${query}`)
 		}
 
-		player.queue.add(result.tracks[0]); // add track
-		if (!player?.queue?.totalSize || (!player.paused && !player.playing)) {
-			player.play()
-			if (!player.paused && !player.playing) player.pause(false)
-		}
-		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${result.tracks[0].title}](${result.tracks[0].uri})`, result.tracks[0].thumbnail ?? "")
+		player.queue.add(response.tracks[0]); // add track
+		if ( !player.playing)  await player.play()
+		
+		await silentMessageWithThumbnail(interaction, 'เพิ่มเพลง',  `[${response.tracks[0].info.title}](${response.tracks[0].info.uri}) (${response.tracks[0].info.duration})`, response.tracks[0].info.artworkUrl ?? "")
 
 
 	}
-}
-export default handler
+} as Command
