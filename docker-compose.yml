@@ -10,7 +10,7 @@ services:
     restart: always
   player:
     # pin the image version to Lavalink v4
-    image: ghcr.io/lavalink-devs/lavalink:3.7.10
+    image: ghcr.io/lavalink-devs/lavalink:4
     container_name: player
     restart: unless-stopped
     environment:
