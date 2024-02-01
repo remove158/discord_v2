@@ -20,7 +20,7 @@ export default {
 		const user = interaction.member?.user
 		const vcId = (interaction.member as GuildMember)?.voice?.channelId;
 
-		if (!vcId) return interaction.reply({ ephemeral: true, content: `กรุณาเข้า Voice Channel` });
+		if (!vcId) return interaction.reply({ ephemeral: true, content: `Please Join Voice Channel` });
 		const vc = (interaction.member as GuildMember)?.voice?.channel as VoiceChannel;
 		if(!vc.joinable || !vc.speakable) return interaction.reply({ ephemeral: true, content: "I am not able to join your channel / speak in there." });
 		const guild_id = interaction.guildId
