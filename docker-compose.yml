@@ -14,8 +14,6 @@ services:
     container_name: player
     restart: unless-stopped
     environment:
-      # set Java options here
-      - _JAVA_OPTIONS=-Xmx6G
       # set lavalink server port
       - SERVER_PORT=2333
       - SERVER_ADDRESS=0.0.0.0
