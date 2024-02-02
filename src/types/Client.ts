@@ -5,6 +5,12 @@ import { RedisClientType } from "redis"
 
 declare type InteractionExecuteFN = (client:BotClient, interaction:ChatInputCommandInteraction<"cached">) => any; 
 
+export interface CustomRequester {
+    id: string,
+    username: string,
+    avatar?: string,
+}
+
 export interface Event {
     name: string,
     execute: (client:BotClient, ...params:any) => any;

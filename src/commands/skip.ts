@@ -29,7 +29,7 @@ export default {
 		}
 
 		await silentMessage(interaction,
-           "ข้ามเพลง", nextTrack ? 
+           "TRACK SKIPPED", nextTrack ? 
             `Skipped [${current?.info.title}](${current?.info.uri}) -> [${nextTrack?.info.title}](${nextTrack?.info.uri})` :
             `Skipped [${current?.info.title}](${current?.info.uri})`
         );
