@@ -19,4 +19,4 @@ jobs:
       - name: Build Docker image
         run: docker build -t remove158/discord .
       - name: Run Docker image
-        run: docker run -d remove158/discord -n discord
+        run: docker run  --name discord -d remove158/discord
