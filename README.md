@@ -20,3 +20,9 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```sh
 sudo docker–compose --version
 ```
+
+
+## Docker run player
+```sh
+docker run -d ghcr.io/lavalink-devs/lavalink:4 -n player  -e server_port=2333 -e SERVER_ADDRESS=0.0.0.0 -e LAVALINK_SERVER_PASSWORD=password -p 2333:2333
+```
