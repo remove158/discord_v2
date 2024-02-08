@@ -7,4 +7,7 @@ export const envConfig = {
         url: process.env.REDIS_URL as string,
         password: process.env.REDIS_PASSWORD as string
     },
+    dev: {
+        ownerId: process.env.OWNER_ID as string
+    }
 }
