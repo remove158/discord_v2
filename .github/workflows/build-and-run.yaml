@@ -7,12 +7,9 @@ on:
 jobs:
   build-and-run:
     runs-on: self-hosted
-    environment: bot
     steps:
       - uses: actions/checkout@v3
       - name: Build Docker image
         run: docker build -t remove158/discord .
       - name: Run Docker image
-        run: |
-          echo $LAVALINKNODES # Access secrets using ${{ secrets.LAVALINKNODES }}
-          docker rm -f discord &&  docker run  --name discord -d  -e LAVALINKNODES=$LAVALINKNODES -e DISCORD_TOKEN=$DISCORD_TOKEN -e CLIENT_ID=$CLIENT_ID -e GEMINI=$GEMINI  -e REDIS_URL=$REDIS_URL -e REDIS_PASSWORD=$REDIS_PASSWORD remove158/discord
+        run: docker rm -f discord &&  docker run  --name discord -d  -e LAVALINKNODES=$LAVALINKNODES -e DISCORD_TOKEN=$DISCORD_TOKEN -e CLIENT_ID=$CLIENT_ID -e GEMINI=$GEMINI  -e REDIS_URL=$REDIS_URL -e REDIS_PASSWORD=$REDIS_PASSWORD remove158/discord
