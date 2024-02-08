@@ -7,13 +7,7 @@ on:
 jobs:
   build-and-run:
     runs-on: self-hosted
-    env:  # Define environment variables accessible to all steps
-      LAVALINKNODES: ${{ secrets.LAVALINKNODES  }}
-      DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-      CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      GEMINI: ${{ secrets.GEMINI }}
-      REDIS_URL: ${{ secrets.REDIS_URL }}
-      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+    environment: bot
     steps:
       - uses: actions/checkout@v3
       - name: Build Docker image
