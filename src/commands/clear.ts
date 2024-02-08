@@ -1,13 +1,13 @@
 
 import { Command } from "@/types/Client";
-import { CommandInteractionOptionResolver, GuildMember, SlashCommandBuilder } from "discord.js";
+import { GuildMember, SlashCommandBuilder } from "discord.js";
 import { silentMessage } from "../utils/message";
 
 
 
 export default {
     data: new SlashCommandBuilder()
-        .setName("clear").setDescription("Empty the queue")
+        .setName("disconnect").setDescription("Disconnect bot")
     ,
     execute: async (client, interaction) => {
         if (!interaction.guildId) return;
@@ -20,7 +20,7 @@ export default {
         await player.stopPlaying()
 
         await silentMessage(interaction,
-            "Clear queue", "Queue is now empty !"
+            "DISCONNECTED", "Bot is now disconnected"
         );
     }
 } as Command;
