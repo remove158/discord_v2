@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
     environment:
       # set lavalink server port
-      - server_port=2333
+      - SERVER_PORT=2333
       - SERVER_ADDRESS=0.0.0.0
       # set password for lavalink
       - LAVALINK_SERVER_PASSWORD=password
@@ -26,5 +26,3 @@ services:
     ports:
       # you only need this if you want to make your lavalink accessible from outside of containers
       - "2333:2333"
-
-docker run -d ghcr.io/lavalink-devs/lavalink:4 -n player  -e server_port=2333 -e SERVER_ADDRESS=0.0.0.0 -e LAVALINK_SERVER_PASSWORD=password -p 2333:2333

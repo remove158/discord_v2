@@ -24,5 +24,5 @@ sudo docker–compose --version
 
 ## Docker run player
 ```sh
-docker run -d --name player  -e server_port=2333 -e SERVER_ADDRESS=0.0.0.0 -e LAVALINK_SERVER_PASSWORD=password -p 2333:2333 ghcr.io/lavalink-devs/lavalink:4
+docker run -d --name player --network=discord -e SERVER_PORT=2333 -e SERVER_ADDRESS=0.0.0.0 -e LAVALINK_SERVER_PASSWORD=password -p 2333:2333 ghcr.io/lavalink-devs/lavalink:4
 ```
