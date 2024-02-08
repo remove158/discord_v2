@@ -19,4 +19,4 @@ jobs:
       - name: Build Docker image
         run: docker build -t remove158/discord .
       - name: Run Docker image
-        run: docker run  --name discord -d remove158/discord
+        run: docker run  --name discord -d  -e LAVALINKNODES=$LAVALINKNODES -e DISCORD_TOKEN=$DISCORD_TOKEN -e CLIENT_ID=$CLIENT_ID -e GEMINI=$GEMINI  -e REDIS_URL=$REDIS_URL -e REDIS_PASSWORD=$REDIS_PASSWORD remove158/discord
