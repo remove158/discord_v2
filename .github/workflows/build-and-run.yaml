@@ -1,15 +1,15 @@
 name: Build and Run Image
 
 on:
-  push:
-    branches: [ master ]
+    push:
+        branches: [master]
 
 jobs:
-  build-and-run:
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build Docker image
-        run: make build
-      - name: Run Docker image
-        run:  make discord
+    build-and-run:
+        runs-on: self-hosted
+        steps:
+            - uses: actions/checkout@v3
+            - name: Build Docker image
+              run: make build
+            - name: Run Docker image
+              run: make LAVALINKNODES=$LAVALINKNODES  LAVALINKNODES=$LAVALINKNODES  DISCORD_TOKEN=$DISCORD_TOKEN  CLIENT_ID=$CLIENT_ID  discord
