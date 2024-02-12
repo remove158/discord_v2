@@ -1,21 +1,27 @@
-import { CacheType, ChatInputCommandInteraction, Client, SlashCommandBuilder } from "discord.js"
-import { LavalinkManager, MiniMap } from "lavalink-client"
-import { RedisClientType } from "redis"
+import {
+    CacheType,
+    ChatInputCommandInteraction,
+    Client,
+    SlashCommandBuilder,
+} from "discord.js";
+import { LavalinkManager, MiniMap } from "lavalink-client";
+import { RedisClientType } from "redis";
 
-
-declare type InteractionExecuteFN = (client: BotClient, interaction: ChatInputCommandInteraction<CacheType>) => any;
+declare type InteractionExecuteFN = (
+    client: BotClient,
+    interaction: ChatInputCommandInteraction<CacheType>
+) => any;
 
 export interface CustomRequester {
-    id: string,
-    username: string,
-    avatar?: string,
+    id: string;
+    username: string;
+    avatar?: string;
 }
 
 export interface Event {
-    name: string,
+    name: string;
     execute: (client: BotClient, ...params: any) => any;
 }
-
 
 export interface Command {
     data: SlashCommandBuilder;
