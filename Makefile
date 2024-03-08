@@ -16,4 +16,4 @@ redis:
 	sudo docker run -d --name redis --network=$(network) -e REDIS_PASSWORD=your_password redis
 
 discord:
-	sudo docker rm -f discord &&  sudo docker run  --name discord --network=$(network) -d  -e LAVALINKNODES="$(LAVALINKNODES)" -e DISCORD_TOKEN="$(DISCORD_TOKEN)" -e CLIENT_ID="$(CLIENT_ID)"  $(image_name)
+	sudo docker rm -f discord &&  sudo docker run  --name discord --network=$(network) -d -e REDIS_PASSWORD="$(REDIS_PASSWORD)" -e REDIS_URL="$(REDIS_URL)" -e LAVALINKNODES="$(LAVALINKNODES)" -e DISCORD_TOKEN="$(DISCORD_TOKEN)" -e CLIENT_ID="$(CLIENT_ID)"  $(image_name)
