@@ -12,4 +12,4 @@ jobs:
             - name: Build Docker image
               run: make build
             - name: Run Docker image
-              run: make  LAVALINKNODES=$LAVALINKNODES  DISCORD_TOKEN=$DISCORD_TOKEN  CLIENT_ID=$CLIENT_ID  discord
+              run: make  discord LAVALINKNODES=$LAVALINKNODES  DISCORD_TOKEN=$DISCORD_TOKEN  CLIENT_ID=$CLIENT_ID 
