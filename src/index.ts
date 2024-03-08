@@ -19,7 +19,7 @@ const client = new Client({
 }) as BotClient;
 
 if (envConfig.redis.url) {
-	client.redis = createClient({ url: envConfig.redis.url, password: envConfig.redis.password });
+	client.redis = createClient({ url: envConfig.redis.url });
 	client.redis.connect();
 	client.redis.on("error", (err) => console.log('Redis Client Error', err));
 } else {
