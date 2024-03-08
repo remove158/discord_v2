@@ -10,36 +10,36 @@ import { createClient } from "redis";
 import { loadLavalinkEvents } from "@/lavalinkEvents";
 
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMessages,
-    ],
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessages,
+	],
 }) as BotClient;
 
-// if (envConfig.redis.url) {
-// 	client.redis = createClient({ url: envConfig.redis.url, password: envConfig.redis.password });
-// 	client.redis.connect();
-// 	client.redis.on("error", (err) => console.log('Redis Client Error', err));
-// } else {
-// 	throw new Error(`Redis (${envConfig.redis.url}) not found`);
-// }
+if (envConfig.redis.url) {
+	client.redis = createClient({ url: envConfig.redis.url, password: envConfig.redis.password });
+	client.redis.connect();
+	client.redis.on("error", (err) => console.log('Redis Client Error', err));
+} else {
+	throw new Error(`Redis (${envConfig.redis.url}) not found`);
+}
 
 const LavalinkNodesOfEnv = process.env.LAVALINKNODES?.split(" ")
-    .filter((v) => v.length)
-    .map((url) => parseLavalinkConnUrl(url));
+	.filter((v) => v.length)
+	.map((url) => parseLavalinkConnUrl(url));
 
 client.lavalink = new LavalinkManager({
-    nodes: LavalinkNodesOfEnv,
-    sendToShard: (guildId, payload) =>
-        client.guilds.cache.get(guildId)?.shard?.send(payload),
-    client: {
-        id: envConfig.clientId,
-    },
-    // queueOptions: {
-    // 	queueStore: new myCustomStore(client.redis)
-    // }
+	nodes: LavalinkNodesOfEnv,
+	sendToShard: (guildId, payload) =>
+		client.guilds.cache.get(guildId)?.shard?.send(payload),
+	client: {
+		id: envConfig.clientId,
+	},
+	queueOptions: {
+		queueStore: new myCustomStore(client.redis)
+	}
 });
 
 client.defaultVolume = 100;
