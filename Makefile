@@ -1,5 +1,5 @@
 image_name = remove158/discord
-lavalink = ghcr.io/lavalink-devs/lavalink:4
+lavalink = ghcr.io/lavalink-devs/lavalink:4.0.3
 network = discord
 
 init:
