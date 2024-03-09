@@ -17,15 +17,15 @@ const client = new Client({
 		GatewayIntentBits.GuildMessages,
 	],
 }) as BotClient;
-
-if (envConfig.redis.url) {
-	client.redis = createClient({ url: envConfig.redis.url });
-	client.redis.connect();
-	client.redis.on("error", (err) => console.log('Redis Client Error', err));
-} else {
-	throw new Error(`Redis (${envConfig.redis.url}) not found`);
-}
-
+//
+// if (envConfig.redis.url) {
+// 	client.redis = createClient({ url: envConfig.redis.url });
+// 	client.redis.connect();
+// 	client.redis.on("error", (err) => console.log('Redis Client Error', err));
+// } else {
+// 	throw new Error(`Redis (${envConfig.redis.url}) not found`);
+// }
+//
 const LavalinkNodesOfEnv = process.env.LAVALINKNODES?.split(" ")
 	.filter((v) => v.length)
 	.map((url) => parseLavalinkConnUrl(url));
@@ -37,9 +37,9 @@ client.lavalink = new LavalinkManager({
 	client: {
 		id: envConfig.clientId,
 	},
-	queueOptions: {
-		queueStore: new myCustomStore(client.redis)
-	}
+	// queueOptions: {
+	// 	queueStore: new myCustomStore(client.redis)
+	// }
 });
 
 client.defaultVolume = 100;
