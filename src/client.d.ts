@@ -17,6 +17,11 @@ type Command = {
 	autocomplete?: subCommandAutocomplete
 }
 
+type Event = {
+	name: string
+	execute: (client: BotClient, ...params: any) => any
+}
+
 type BotClient = {
 	lavalink: LavalinkManager
 	commands: MiniMap<string, Command>
