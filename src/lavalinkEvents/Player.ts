@@ -22,11 +22,11 @@ export function PlayerEvents(client: BotClient) {
 		console.log(":: TRACK STUCK ::", channel.name)
 	});
 
-	client.lavalink.on("trackError", (player) => {
+	client.lavalink.on("trackError", (player, t, p) => {
 		const channel = client.channels.cache.get(
 			player.textChannelId!
 		) as TextChannel;
-		console.log(":: TRACK ERROR ::", channel.name)
+		console.log(":: TRACK ERROR ::", channel.name, t, p)
 	});
 	/**
 	 * Queue/Track Events
