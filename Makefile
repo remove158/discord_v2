@@ -10,8 +10,8 @@ build:
 	sudo docker build . -t $(image_name)
 
 player:
-	sudo docker run -d --name player --network=$(network) -e YOUTUBE_SEARCH_ENABLED=true -e SOURCES_YOUTUBE=true -p 2333:2333 -e SERVER_PORT=2333  -e LAVALINK_SERVER_PASSWORD=password  $(lavalink)
-	sudo docker run -d --name player2 --network=$(network) -e YOUTUBE_SEARCH_ENABLED=true -e SOURCES_YOUTUBE=true -p 2334:2333 -e SERVER_PORT=2333  -e LAVALINK_SERVER_PASSWORD=password  $(lavalink)
+	sudo docker run -d --name player --network=$(network) -e SERVER_ADDRESS=0.0.0.0 -e SERVER_HTTP2_ENABLED=true -e YOUTUBE_SEARCH_ENABLED=true -e SOURCES_YOUTUBE=true -p 2333:2333 -e SERVER_PORT=2333  -e LAVALINK_SERVER_PASSWORD=password  $(lavalink)
+	sudo docker run -d --name player2 --network=$(network) -e SERVER_ADDRESS=0.0.0.0 -e SERVER_HTTP2_ENABLED=true -e YOUTUBE_SEARCH_ENABLED=true -e SOURCES_YOUTUBE=true -p 2334:2333 -e SERVER_PORT=2333  -e LAVALINK_SERVER_PASSWORD=password  $(lavalink)
 
 redis:
 	sudo docker run -d --name redis --network=$(network) -p 6379:6379 -e REDIS_PASSWORD=your_password redis
