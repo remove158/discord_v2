@@ -61,7 +61,7 @@ export default {
 
 		if (!connected) await player.connect();
 
-		const response = await player.search({ query, source: "spsearch" }, interaction.user);
+		const response = await player.search(query, interaction.user);
 		if (!response || !response.tracks?.length) {
 			player.disconnect()
 			return interaction.reply({
