@@ -47,6 +47,7 @@ export default {
 				textChannelId: txId,
 				selfDeaf: true,
 				selfMute: false,
+				instaUpdateFiltersFix: true, // optional
 				volume: client.defaultVolume,
 				applyVolumeAsFilter: false,
 			});
