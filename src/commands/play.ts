@@ -62,9 +62,7 @@ export default {
 		if (!connected) await player.connect();
 
 		const response = await player.search({ query, source: "ytmsearch" }, interaction.user);
-		if (
-			!response || !response.tracks || response.tracks.length === 0
-		) {
+		if (!response || !response.tracks?.length) {
 			player.disconnect()
 			return interaction.reply({
 				content: `Not found ${query}`,
