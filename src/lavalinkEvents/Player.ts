@@ -15,6 +15,19 @@ export function PlayerEvents(client: BotClient) {
 		player.disconnect();
 	});
 
+	client.lavalink.on("trackStuck", (player) => {
+		const channel = client.channels.cache.get(
+			player.textChannelId!
+		) as TextChannel;
+		console.log(":: TRACK STUCK ::", channel.name)
+	});
+
+	client.lavalink.on("trackError", (player) => {
+		const channel = client.channels.cache.get(
+			player.textChannelId!
+		) as TextChannel;
+		console.log(":: TRACK ERROR ::", channel.name)
+	});
 	/**
 	 * Queue/Track Events
 	 */
