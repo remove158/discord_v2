@@ -1,1 +1,3 @@
-console.log('Hello via Bun!')
+import { envConfig } from '@/config'
+
+console.log(envConfig.DISCORD_TOKEN)
