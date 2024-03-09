@@ -4,16 +4,25 @@ import type { LavalinkManager } from 'lavalink-client'
 type InteractionExecuteFN = (
 	client: BotClient,
 	interaction: ChatInputCommandInteraction<'cached'>
-) => unknow
+) => any
 
 type AutoCompleteExecuteFN = (
 	client: BotClient,
 	interaction: AutocompleteInteraction
-) => unknow
+) => any
 
 type Command = {
 	data: SlashCommandBuilder
 	execute: InteractionExecuteFN
+	autocomplete?: subCommandAutocomplete
+}
+
+type SubCommand = {
+	data:
+	| SlashCommandSubcommandBuilder
+	| SlashCommandSubcommandGroupBuilder
+	| SlashCommandSubcommandsOnlyBuilder
+	execute: subCommandExecute
 	autocomplete?: subCommandAutocomplete
 }
 

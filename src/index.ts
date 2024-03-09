@@ -1,7 +1,9 @@
 import { envConfig } from '@/config'
-import { Client, Events, GatewayIntentBits } from 'discord.js'
+import { Client, GatewayIntentBits } from 'discord.js'
 import type { BotClient } from './client'
 import { loadCommands } from './handlers/commandLoader'
+import { loadEvents } from './handlers/eventsLoader'
+import { loadLavalink } from './lavalink'
 
 const client = new Client({
 	intents: [
@@ -12,10 +14,8 @@ const client = new Client({
 	]
 }) as BotClient
 
-client.on(Events.ClientReady, () => {
-	console.log('[DISCORD BOT] Ready to be used!')
-})
-
+loadLavalink(client)
 loadCommands(client)
+loadEvents(client)
 
 client.login(envConfig.DISCORD_TOKEN)
