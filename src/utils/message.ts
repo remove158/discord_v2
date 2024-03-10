@@ -1,33 +1,16 @@
-import {
-    CacheType,
-    ChatInputCommandInteraction,
-    EmbedBuilder,
-} from "discord.js";
+import { EmbedBuilder } from '@discordjs/builders'
+import type { CacheType, ChatInputCommandInteraction } from 'discord.js'
 
-export const builder = (title: string, description: string) =>
-    new EmbedBuilder()
-        .setColor(0xf29fbb)
-        .setTitle(title)
-        .setDescription(description);
+const COLOR = 0xf29fbb
+const SILENT_FLAGS = [4096] as any
 
-export const silentMessage = async (
-    interaction: ChatInputCommandInteraction<CacheType>,
-    title: string,
-    description: string
-) => {
-    return await interaction.reply({
-        embeds: [builder(title, description)],
-        flags: [4096] as any,
-    });
-};
-export const silentMessageWithThumbnail = async (
-    interaction: ChatInputCommandInteraction<CacheType>,
-    title: string,
-    description: string,
-    thumbnail: string
-) => {
-    return await interaction.reply({
-        embeds: [builder(title, description).setThumbnail(thumbnail)],
-        flags: [4096] as any,
-    });
-};
+export const createEmbded = (title: string, description: string) =>
+	new EmbedBuilder()
+		.setColor(COLOR)
+		.setTitle(title)
+		.setDescription(description)
+
+export const replySilent = async (
+	interaction: ChatInputCommandInteraction<CacheType>,
+	embded: EmbedBuilder
+) => await interaction.reply({ embeds: [embded], flags: SILENT_FLAGS })

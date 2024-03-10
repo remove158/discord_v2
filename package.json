@@ -1,26 +1,25 @@
 {
-  "name": "discord",
-  "module": "index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "scripts": {
-    "start": "tsx src/index.ts",
-    "dev": "nodemon"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@google/generative-ai": "^0.1.3",
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.1",
-    "erela.js": "^2.4.0",
-    "lavalink-client": "^2.1.3",
-    "nodemon": "^3.0.3",
-    "redis": "^4.6.12",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.7.0"
-  }
+	"name": "osmbot",
+	"module": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"start": "tsx src/index.ts"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"prettier": "^3.2.5",
+		"tsx": "^4.7.1"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"discord.js": "^14.14.1",
+		"dotenv": "^16.4.5",
+		"eslint": "^8.57.0",
+		"lavalink": "^2.13.0",
+		"znv": "^0.4.0",
+		"zod": "^3.22.4"
+	}
 }

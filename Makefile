@@ -1,20 +1,11 @@
-image_name = remove158/discord
-lavalink = ghcr.io/lavalink-devs/lavalink:4.0.3
-network = discord
-server_address = pi.local
-
-init:
-	sudo docker network create -d bridge $(network)
+image_name = remove158/discord:latest
 
 build:
 	sudo docker build . -t $(image_name)
 
-player:
-	sudo docker run -d --name player --network=$(network) -e SERVER_ADDRESS=0.0.0.0 -e SERVER_HTTP2_ENABLED=true -e YOUTUBE_SEARCH_ENABLED=true -e SOURCES_YOUTUBE=true -p 2333:2333 -e SERVER_PORT=2333  -e LAVALINK_SERVER_PASSWORD=password  $(lavalink)
-	sudo docker run -d --name player2 --network=$(network) -e SERVER_ADDRESS=0.0.0.0 -e SERVER_HTTP2_ENABLED=true -e YOUTUBE_SEARCH_ENABLED=true -e SOURCES_YOUTUBE=true -p 2334:2333 -e SERVER_PORT=2333  -e LAVALINK_SERVER_PASSWORD=password  $(lavalink)
 
-redis:
-	sudo docker run -d --name redis --network=$(network) -p 6379:6379 -e REDIS_PASSWORD=your_password redis
+up:
+	sudo docker compose up --build
 
-discord:
-	sudo docker rm -f discord &&  sudo docker run  --name discord --network=$(network) -d -e REDIS_PASSWORD="$(REDIS_PASSWORD)" -e REDIS_URL="$(REDIS_URL)" -e LAVALINKNODES="$(LAVALINKNODES)" -e DISCORD_TOKEN="$(DISCORD_TOKEN)" -e CLIENT_ID="$(CLIENT_ID)"  $(image_name)
+down:
+	sudo docker compose down

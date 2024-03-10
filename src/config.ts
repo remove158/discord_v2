@@ -1,13 +1,11 @@
-import "dotenv/config";
+import { config } from 'dotenv'
+import { parseEnv } from 'znv'
+import { z } from 'zod'
 
-export const envConfig = {
-    token: process.env.DISCORD_TOKEN as string,
-    clientId: process.env.CLIENT_ID as string,
-    redis: {
-        url: process.env.REDIS_URL as string,
-        password: process.env.REDIS_PASSWORD as string,
-    },
-    dev: {
-        ownerId: process.env.OWNER_ID as string,
-    },
-};
+config()
+
+export const envConfig = parseEnv(process.env, {
+	DISCORD_TOKEN: z.string(),
+	CLIENT_ID: z.string(),
+	LAVALINK_NODES: z.string()
+})
