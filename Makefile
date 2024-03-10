@@ -8,7 +8,7 @@ env:
 	echo "CLIENT_ID=$(CLIENT_ID)" >> .env
 
 up:
-	sudo docker compose up --build
+	sudo docker compose up -d --build
 
 down:
 	sudo docker compose down
