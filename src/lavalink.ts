@@ -13,6 +13,14 @@ export const loadLavalink = (client: BotClient) => {
 			client.guilds.cache.get(guildId)?.shard?.send(payload),
 		client: {
 			id: envConfig.CLIENT_ID
+		},
+		playerOptions: {
+			onDisconnect: {
+				autoReconnect: true
+			},
+			onEmptyQueue: {
+				destroyAfterMs: 30_000
+			}
 		}
 	})
 }

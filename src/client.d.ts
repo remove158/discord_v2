@@ -1,9 +1,9 @@
-import type { Client, SlashCommandBuilder } from 'discord.js'
-import type { LavalinkManager } from 'lavalink-client'
+import type { Client, SlashCommandBuilder, CacheType } from 'discord.js'
+import type { LavalinkManager, MiniMap } from 'lavalink-client'
 
 type InteractionExecuteFN = (
 	client: BotClient,
-	interaction: ChatInputCommandInteraction<'cached'>
+	interaction: ChatInputCommandInteraction<CacheType>
 ) => any
 
 type AutoCompleteExecuteFN = (
@@ -14,7 +14,13 @@ type AutoCompleteExecuteFN = (
 type Command = {
 	data: SlashCommandBuilder
 	execute: InteractionExecuteFN
-	autocomplete?: subCommandAutocomplete
+	autocomplete?: AutoCompleteExecuteFN
+}
+
+type subCommandExecute = { [subCommandName: string]: InteractionExecuteFN }
+
+type subCommandAutocomplete = {
+	[subCommandName: string]: AutoCompleteExecuteFN
 }
 
 type SubCommand = {
