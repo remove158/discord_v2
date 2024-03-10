@@ -112,16 +112,21 @@ export default {
 
 		const TITLE =
 			response.loadType === 'playlist' ? 'ADDED TRACKS' : 'ADDED TRACK'
-
+		const track =
+			response.tracks[
+			fromAutoComplete
+				? Number(query.replace('autocomplete_', ''))
+				: 0
+			]
 		const BODY =
 			response.loadType === 'playlist'
 				? `✅ Added [${response.tracks.length}] Tracks${response.playlist?.title ? ` - from the ${response.pluginInfo.type || 'Playlist'} ${response.playlist.uri ? `[\`${response.playlist.title}\`](<${response.playlist.uri}>)` : `\`${response.playlist.title}\``}` : ''} at \`#${player.queue.tracks.length - response.tracks.length}\``
-				: `[${formatMS_HHMMSS(response.tracks[0].info.duration)}] [${response.tracks[0].info.title}](${response.tracks[0].info.uri}) (by ${response.tracks[0].info.author || 'Unknown-Author'})`
+				: `[${formatMS_HHMMSS(track.info.duration)}] [${track.info.title}](${track.info.uri}) (by ${track.info.author || 'Unknown-Author'})`
 
 		const embded = createEmbded(TITLE, BODY)
 
 		if (response.loadType !== 'playlist')
-			embded.setThumbnail(response.tracks[0].info.artworkUrl)
+			embded.setThumbnail(track.info.artworkUrl)
 
 		await replySilent(interaction, embded)
 

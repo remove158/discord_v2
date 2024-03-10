@@ -4,6 +4,7 @@ import type { BotClient } from './client'
 import { loadCommands } from './handlers/commandLoader'
 import { loadEvents } from './handlers/eventsLoader'
 import { loadLavalink } from './lavalink'
+import { loadLavalinkEvents } from './lavalinkEvents'
 
 const client = new Client({
 	intents: [
@@ -17,5 +18,6 @@ const client = new Client({
 loadLavalink(client)
 loadCommands(client)
 loadEvents(client)
+loadLavalinkEvents(client)
 
 client.login(envConfig.DISCORD_TOKEN)

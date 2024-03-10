@@ -4,7 +4,7 @@ import type { CacheType, ChatInputCommandInteraction } from 'discord.js'
 const COLOR = 0xf29fbb
 const SILENT_FLAGS = [4096] as any
 
-export const createEmbded = (title: string, description: string) =>
+export const createEmbded = (title: string, description: string | string[]) =>
 	new EmbedBuilder()
 		.setColor(COLOR)
 		.setTitle(title)
