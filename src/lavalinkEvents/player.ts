@@ -21,7 +21,7 @@ export function PlayerEvents(client: BotClient) {
 			`> - **Author:** ${track.info.author}`,
 			`> - **Duration:** ${formatMS_HHMMSS(track.info.duration)} | Ends <t:${Math.floor((Date.now() + track.info.duration) / 1000)}:R>`,
 			`> - **Source:** ${track.info.sourceName}`,
-			`> - **Requester:** <@${track.requester}>`,
+			`> - **Requester:** ${track.requester}`,
 			track.pluginInfo?.clientData?.fromAutoplay
 				? `> *From Autoplay* ✅`
 				: undefined
@@ -32,6 +32,7 @@ export function PlayerEvents(client: BotClient) {
 
 		// local tracks are invalid uris
 		const embed = createEmbded(TITLE, BODY)
+		embed.setThumbnail(track.info.artworkUrl)
 		if (/^https?:\/\//.test(track.info.uri)) embed.setURL(track.info.uri)
 		return channel.send({
 			embeds: [embed],
