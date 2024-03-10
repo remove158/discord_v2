@@ -7,11 +7,10 @@ services:
         restart: unless-stopped
         links:
             - player
+        env_file:
+            - .env
         environment:
             - LAVALINK_NODES=lavalink://1:password@player:2333
-            - DISCORD_TOKEN=${DISCORD_TOKEN}
-            - CLIENT_ID=${CLIENT_ID}
-
     player:
         build: ./lavalink
         container_name: player
