@@ -13,7 +13,5 @@ jobs:
               run: make build
             - name: Make env
               run: make env
-            - name: docker compose down
-              run: make down
-            - name: docker compose up
-              run: make up
+            - name: restart discord bot
+              run: sudo docker compose up -d --force-recreate --build bot
