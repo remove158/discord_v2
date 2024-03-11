@@ -18,8 +18,6 @@ services:
         volumes:
             # Mount application.yml for configuration (optional, see Lavalink documentation)
             - ./lavalink/application.yml:/opt/Lavalink/application.yml
-            # Persist plugins between restarts (optional, see Lavalink documentation)
-            - ./plugins/:/opt/Lavalink/plugins/
         ports:
             # Expose port for your application to connect (optional if container network is used)
             - '2333:2333'

@@ -81,6 +81,16 @@ export default {
 				instaUpdateFiltersFix: true, // optional
 				applyVolumeAsFilter: true // if true player.setVolume(54) -> player.filters.setVolume(0.54)
 			})
+		await player.setSponsorBlock([
+			'sponsor',
+			'selfpromo',
+			'interaction',
+			'intro',
+			'outro',
+			'preview',
+			'music_offtopic',
+			'filler'
+		])
 
 		const connected = player.connected
 
