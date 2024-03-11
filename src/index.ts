@@ -5,6 +5,7 @@ import { loadCommands } from './handlers/commandLoader'
 import { loadEvents } from './handlers/eventsLoader'
 import { loadLavalink } from './lavalink'
 import { loadLavalinkEvents } from './lavalinkEvents'
+import { MiniMap } from 'lavalink-client'
 
 const client = new Client({
 	intents: [
@@ -15,6 +16,7 @@ const client = new Client({
 	]
 }) as BotClient
 
+client.autoplay = new MiniMap()
 loadLavalink(client)
 loadCommands(client)
 loadEvents(client)

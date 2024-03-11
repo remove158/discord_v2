@@ -1,6 +1,7 @@
 import { LavalinkManager, parseLavalinkConnUrl } from 'lavalink-client'
 import { envConfig } from './config'
 import type { BotClient } from './client'
+import { autoPlayFunction } from './utils/autoplay'
 
 const LavalinkNodesOfEnv = envConfig.LAVALINK_NODES.split(' ')
 	.filter((v) => v.length)
@@ -19,7 +20,8 @@ export const loadLavalink = (client: BotClient) => {
 				autoReconnect: true
 			},
 			onEmptyQueue: {
-				destroyAfterMs: 30_000
+				destroyAfterMs: 30_000,
+				autoPlayFunction: autoPlayFunction(client)
 			}
 		}
 	})
