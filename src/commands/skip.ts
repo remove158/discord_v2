@@ -33,7 +33,7 @@ export default {
 		const current = player.queue.current
 		const nextTrack = player.queue?.tracks[0]
 
-		await player.skip()
+		await player.skip(0, false)
 		const TITLE = 'TRACK SKIPPED'
 		const BODY = nextTrack
 			? `Skipped [${current?.info.title}](${current?.info.uri}) -> [${nextTrack?.info.title}](${nextTrack?.info.uri})`
