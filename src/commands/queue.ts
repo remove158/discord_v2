@@ -28,19 +28,19 @@ export default {
 
 		const TITLE = 'QUEUE'
 		const timestamps: number[] = []
-		player.queue.tracks.reduce((sum, cur) => {
+		player.queue?.tracks.reduce((sum, cur) => {
 			timestamps.push(sum + (cur.info.duration ?? 0))
 			return sum + (cur.info.duration ?? 0)
 		}, 0)
 
-		const BODY = player.queue.tracks
+		const BODY = player.queue?.tracks
 			.map(
 				(track, idx) =>
 					`${idx + 1}. \`${track.info.title}\` <t:${Math.floor((Date.now() + timestamps[idx]) / 1000)}:R>`
 			)
 			.join('\n')
 
-		const embded = createEmbed(TITLE, BODY ?? 'Queue Empty')
+		const embded = createEmbed(TITLE, BODY || 'Queue Empty')
 
 		await replySilent(interaction, embded)
 	}
