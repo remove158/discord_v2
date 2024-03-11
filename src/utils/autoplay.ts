@@ -1,6 +1,11 @@
 import type { BotClient } from '@/client'
 import type { Player, Track } from 'lavalink-client'
 
+function getRandomTrack(max: number) {
+	const limit = max > 5 ? 5 : max
+	return Math.floor(Math.random() * limit)
+}
+
 export const autoPlayFunction =
 	(client: BotClient) => async (player: Player, lastPlayedTrack: Track) => {
 		const autoplay = client.autoplay.get(player.guildId) ?? false
@@ -36,17 +41,15 @@ export const autoPlayFunction =
 						return response
 					})
 					.catch(console.warn)
-				if (res && res.tracks.length)
-					await player.queue.add(
-						res.tracks.slice(0, 1).map((track) => {
-							// transform the track plugininfo so you can figure out if the track is from autoplay or not.
-							track.pluginInfo.clientData = {
-								...(track.pluginInfo.clientData || {}),
-								fromAutoplay: true
-							}
-							return track
-						})
-					)
+				if (res && res.tracks.length) {
+					const idx = getRandomTrack(res.tracks.length)
+					const track = res.tracks[idx]
+					track.pluginInfo.clientData = {
+						...(track.pluginInfo.clientData || {}),
+						fromAutoplay: true
+					}
+					await player.queue.add(track)
+				}
 			}
 			return
 		}
@@ -73,17 +76,16 @@ export const autoPlayFunction =
 				})
 				.catch(console.warn)
 
-			if (res && res.tracks.length)
-				await player.queue.add(
-					res.tracks.slice(0, 1).map((track) => {
-						// transform the track plugininfo so you can figure out if the track is from autoplay or not.
-						track.pluginInfo.clientData = {
-							...(track.pluginInfo.clientData || {}),
-							fromAutoplay: true
-						}
-						return track
-					})
-				)
+			if (res && res.tracks.length) {
+				const idx = getRandomTrack(res.tracks.length)
+				const track = res.tracks[idx]
+				track.pluginInfo.clientData = {
+					...(track.pluginInfo.clientData || {}),
+					fromAutoplay: true
+				}
+				await player.queue.add(track)
+			}
+
 			return
 		}
 		return
