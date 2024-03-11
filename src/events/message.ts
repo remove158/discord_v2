@@ -34,13 +34,16 @@ export default {
 
 		if (message.content === '?newcommand' && message.guildId) {
 			try {
+				const commands = client.commands.map((v) =>
+					v.data.toJSON()
+				) as ApplicationCommandDataResolvable[]
 				await rest.put(
 					Routes.applicationGuildCommands(
 						envConfig.CLIENT_ID,
 						message.guildId
 					),
 					{
-						body: []
+						body: commands
 					}
 				)
 				message.reply(
