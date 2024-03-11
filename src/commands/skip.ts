@@ -38,17 +38,13 @@ export default {
 			})
 
 		const current = player.queue.current
-		const nextTrack = player.queue.tracks[0]
+		const nextTrack = player.queue?.tracks[0]
 
-		if (!nextTrack) {
-			await player.destroy()
-		} else {
-			await player.skip(
-				(
-					interaction.options as CommandInteractionOptionResolver
-				).getInteger('skipto', false) || 0
-			)
-		}
+		await player.skip(
+			(
+				interaction.options as CommandInteractionOptionResolver
+			).getInteger('skipto') ?? 0
+		)
 		const TITLE = 'TRACK SKIPPED'
 		const BODY = nextTrack
 			? `Skipped [${current?.info.title}](${current?.info.uri}) -> [${nextTrack?.info.title}](${nextTrack?.info.uri})`
