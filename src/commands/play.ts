@@ -7,7 +7,7 @@ import {
 import type { Command } from '@/client'
 import type { SearchPlatform, SearchResult, Track } from 'lavalink-client'
 import { formatMS_HHMMSS } from '@/utils/time'
-import { createEmbded, replySilent } from '@/utils/message'
+import { createEmbed, replySilent } from '@/utils/message'
 
 const autocompleteMap = new Map()
 
@@ -123,7 +123,7 @@ export default {
 				? `✅ Added [${response.tracks.length}] Tracks${response.playlist?.title ? ` - from the ${response.pluginInfo.type || 'Playlist'} ${response.playlist.uri ? `[\`${response.playlist.title}\`](<${response.playlist.uri}>)` : `\`${response.playlist.title}\``}` : ''} at \`#${player.queue.tracks.length - response.tracks.length}\``
 				: `[${formatMS_HHMMSS(track.info.duration)}] [${track.info.title}](${track.info.uri}) (by ${track.info.author || 'Unknown-Author'})`
 
-		const embded = createEmbded(TITLE, BODY)
+		const embded = createEmbed(TITLE, BODY)
 
 		if (response.loadType !== 'playlist')
 			embded.setThumbnail(track.info.artworkUrl)

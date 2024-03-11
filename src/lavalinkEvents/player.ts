@@ -1,5 +1,5 @@
 import type { BotClient } from '@/client'
-import { createEmbded } from '@/utils/message'
+import { createEmbed } from '@/utils/message'
 import { formatMS_HHMMSS } from '@/utils/time'
 import type { TextChannel } from 'discord.js'
 
@@ -31,7 +31,7 @@ export function PlayerEvents(client: BotClient) {
 			.substring(0, 4096)
 
 		// local tracks are invalid uris
-		const embed = createEmbded(TITLE, BODY)
+		const embed = createEmbed(TITLE, BODY)
 		embed.setThumbnail(track.info.artworkUrl)
 		if (/^https?:\/\//.test(track.info.uri)) embed.setURL(track.info.uri)
 		return channel.send({
