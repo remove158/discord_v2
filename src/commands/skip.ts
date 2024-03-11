@@ -9,14 +9,7 @@ import {
 export default {
 	data: new SlashCommandBuilder()
 		.setName('skip')
-		.setDescription('Skip the current track')
-		.addIntegerOption((o) =>
-			o
-				.setName('skipto')
-				.setDescription('to which song to skip to?')
-				.setRequired(false)
-		),
-
+		.setDescription('Skip the current track'),
 	execute: async (client, interaction) => {
 		if (!interaction.guildId) return
 		const vcId = (interaction.member as GuildMember)?.voice?.channelId
@@ -40,11 +33,7 @@ export default {
 		const current = player.queue.current
 		const nextTrack = player.queue?.tracks[0]
 
-		await player.skip(
-			(
-				interaction.options as CommandInteractionOptionResolver
-			).getInteger('skipto') ?? 0
-		)
+		await player.skip()
 		const TITLE = 'TRACK SKIPPED'
 		const BODY = nextTrack
 			? `Skipped [${current?.info.title}](${current?.info.uri}) -> [${nextTrack?.info.title}](${nextTrack?.info.uri})`
