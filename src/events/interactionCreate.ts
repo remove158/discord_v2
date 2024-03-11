@@ -1,19 +1,16 @@
 import {
 	ChatInputCommandInteraction,
-	CommandInteractionOptionResolver,
 	Events,
 	type Interaction
 } from 'discord.js'
 
-import type { Command, Event, SubCommand } from '@/client'
+import type { Command, Event } from '@/client'
 
 export default {
 	name: Events.InteractionCreate,
 	execute: async (client, interaction: Interaction) => {
 		if (!interaction.isCommand() && !interaction.isAutocomplete()) return
-		const subCommand = (
-			interaction.options as CommandInteractionOptionResolver
-		).getSubcommand(false)
+
 		const command = client.commands.get(interaction.commandName)
 		if (!command)
 			return console.error(
@@ -21,20 +18,6 @@ export default {
 			)
 		try {
 			if (interaction.isCommand()) {
-				if (subCommand) {
-					if (
-						typeof (command as SubCommand).execute[subCommand] !==
-						'function'
-					)
-						return console.error(
-							`[Command-Error] Sub-Command is missing property "execute#${subCommand}".`
-						)
-					// execute subcommand
-					return await (command as SubCommand).execute[subCommand](
-						client,
-						interaction as ChatInputCommandInteraction<'cached'>
-					)
-				}
 				// execute command
 				return await (command as Command).execute(
 					client,
@@ -42,20 +25,6 @@ export default {
 				)
 			}
 			if (interaction.isAutocomplete()) {
-				if (subCommand) {
-					if (
-						typeof (command as SubCommand).autocomplete?.[
-						subCommand
-						] !== 'function'
-					)
-						return console.error(
-							`[Command-Error] Sub-Command is missing property "autocomplete#${subCommand}".`
-						)
-					// execute subcommand-autocomplete
-					return await (command as SubCommand).autocomplete?.[
-						subCommand
-					](client, interaction)
-				}
 				if (!(command as Command).autocomplete)
 					return console.error(
 						`[Command-Error] Command is missing property "autocomplete".`
