@@ -31,5 +31,28 @@ export default {
 				message.reply(`Fail to load command`)
 			}
 		}
+
+		if (message.content === '?newcommand' && message.guildId) {
+			try {
+				const commands = client.commands.map((v) =>
+					v.data.toJSON()
+				) as ApplicationCommandDataResolvable[]
+
+				await rest.put(
+					Routes.applicationGuildCommands(
+						envConfig.CLIENT_ID,
+						message.guildId
+					),
+					{
+						body: commands
+					}
+				)
+				message.reply(
+					`Loaded ${client.commands.size} slash (/) commands`
+				)
+			} catch {
+				message.reply(`Fail to load command`)
+			}
+		}
 	}
 } as Event
