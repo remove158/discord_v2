@@ -36,7 +36,7 @@ export default {
 		const BODY = player.queue?.tracks
 			.map(
 				(track, idx) =>
-					`${idx + 1}. \`${track.info.title}\` <t:${Math.floor((Date.now() + timestamps[idx]) / 1000)}:R>`
+					`> - **${track.info.title}** | <t:${Math.floor((Date.now() + timestamps[idx]) / 1000)}:R>`
 			)
 			.join('\n')
 
