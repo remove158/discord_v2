@@ -10,7 +10,7 @@ services:
         env_file:
             - .env
         environment:
-            - LAVALINK_NODES=lavalink://1:password@player:2333 lavalink://1:password@player2:2333
+            - LAVALINK_NODES=lavalink://1:password@player:2333 lavalink://2:password@player2:2333
     player:
         build: ./lavalink
         container_name: player
