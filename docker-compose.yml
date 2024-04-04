@@ -10,7 +10,7 @@ services:
         env_file:
             - .env
         environment:
-            - LAVALINK_NODES=lavalink://1:password@player:2333
+            - LAVALINK_NODES=lavalink://1:password@player:2333 lavalink://1:password@player2:2333
     player:
         build: ./lavalink
         container_name: player
@@ -21,3 +21,10 @@ services:
         ports:
             # Expose port for your application to connect (optional if container network is used)
             - '2333:2333'
+    player2:
+        build: ./lavalink
+        container_name: player
+        restart: unless-stopped
+        volumes:
+            # Mount application.yml for configuration (optional, see Lavalink documentation)
+            - ./lavalink/application.yml:/opt/Lavalink/application.yml
