@@ -23,7 +23,7 @@ services:
             - '2333:2333'
     player2:
         build: ./lavalink
-        container_name: player
+        container_name: player2
         restart: unless-stopped
         volumes:
             # Mount application.yml for configuration (optional, see Lavalink documentation)
