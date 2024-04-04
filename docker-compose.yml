@@ -12,7 +12,7 @@ services:
         environment:
             - LAVALINK_NODES=lavalink://1:password@player:2333 lavalink://2:password@player2:2333
     player:
-        build: ghcr.io/lavalink-devs/lavalink:v4-update-lp
+        image: ghcr.io/lavalink-devs/lavalink:v4-update-lp
         container_name: player
         restart: unless-stopped
         volumes:
@@ -22,7 +22,7 @@ services:
             # Expose port for your application to connect (optional if container network is used)
             - '2333:2333'
     player2:
-        build: ghcr.io/lavalink-devs/lavalink:v4-update-lp
+        image: ghcr.io/lavalink-devs/lavalink:v4-update-lp
         container_name: player2
         restart: unless-stopped
         volumes:
