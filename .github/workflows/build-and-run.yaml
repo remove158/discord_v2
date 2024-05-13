@@ -7,11 +7,16 @@ on:
 jobs:
     build-and-run:
         runs-on: self-hosted
+        env:
+            CLIENT_ID: ${{ secrets.CLIENT_ID }}
+            DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         steps:
             - uses: actions/checkout@v3
             - name: Build Docker image
               run: make build
             - name: Make env
               run: make env
+            - name: echo env
+              run: echo $CLIENT_ID
             - name: restart discord bot
               run: make down && make up
