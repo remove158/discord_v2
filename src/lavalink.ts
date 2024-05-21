@@ -20,7 +20,7 @@ export const loadLavalink = (client: BotClient) => {
 				autoReconnect: true
 			},
 			onEmptyQueue: {
-				destroyAfterMs: 30_000,
+				destroyAfterMs: 300_000,
 				autoPlayFunction: autoPlayFunction(client)
 			}
 		}
