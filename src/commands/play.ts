@@ -81,16 +81,6 @@ export default {
 				instaUpdateFiltersFix: true, // optional
 				applyVolumeAsFilter: true // if true player.setVolume(54) -> player.filters.setVolume(0.54)
 			})
-		await player.setSponsorBlock([
-			'sponsor',
-			'selfpromo',
-			'interaction',
-			'intro',
-			'outro',
-			'preview',
-			'music_offtopic',
-			'filler'
-		])
 
 		const connected = player.connected
 
@@ -114,19 +104,19 @@ export default {
 			response.loadType === 'playlist'
 				? response.tracks
 				: response.tracks[
-				fromAutoComplete
-					? Number(query.replace('autocomplete_', ''))
-					: 0
-				]
+						fromAutoComplete
+							? Number(query.replace('autocomplete_', ''))
+							: 0
+					]
 		)
 
 		const TITLE =
 			response.loadType === 'playlist' ? 'ADDED TRACKS' : 'ADDED TRACK'
 		const track =
 			response.tracks[
-			fromAutoComplete
-				? Number(query.replace('autocomplete_', ''))
-				: 0
+				fromAutoComplete
+					? Number(query.replace('autocomplete_', ''))
+					: 0
 			]
 		const BODY =
 			response.loadType === 'playlist'
@@ -201,20 +191,20 @@ export default {
 		await interaction.respond(
 			res.loadType === 'playlist'
 				? [
-					{
-						name: `Playlist [${res.tracks.length} Tracks] - ${res.playlist?.title}`,
-						value: `autocomplete_0`
-					}
-				]
+						{
+							name: `Playlist [${res.tracks.length} Tracks] - ${res.playlist?.title}`,
+							value: `autocomplete_0`
+						}
+					]
 				: res.tracks
-					.map((t: Track, i) => ({
-						name: `[${t.info.title} (by ${t.info.author || 'Unknown-Author'})`.substring(
-							0,
-							100
-						),
-						value: `autocomplete_${i}`
-					}))
-					.slice(0, 25)
+						.map((t: Track, i) => ({
+							name: `[${t.info.title} (by ${t.info.author || 'Unknown-Author'})`.substring(
+								0,
+								100
+							),
+							value: `autocomplete_${i}`
+						}))
+						.slice(0, 25)
 		)
 	}
 } as Command
