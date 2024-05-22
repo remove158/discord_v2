@@ -37,9 +37,11 @@ jobs:
               run: make env
             - name: start player
               run: docker compose up player -d
+            - name: pull new docker image
+              run: docker compose pull bot
     deploy:
         runs-on: self-hosted
         needs: setup
         steps:
             - name: restart discord bot
-              run: docker compose down bot && docker compose pull && docker compose up bot -d --build
+              run: docker compose down bot && docker compose up bot -d --build
