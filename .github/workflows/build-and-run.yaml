@@ -29,6 +29,9 @@ jobs:
     setup:
         runs-on: self-hosted
         needs: build
+        env:
+            CLIENT_ID: ${{ secrets.CLIENT_ID }}
+            DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         steps:
             - name: create environment
               run: make env
@@ -37,9 +40,6 @@ jobs:
     deploy:
         runs-on: self-hosted
         needs: setup
-        env:
-            CLIENT_ID: ${{ secrets.CLIENT_ID }}
-            DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         steps:
             - name: restart discord bot
               run: docker compose down bot && docker compose pull && docker compose up bot -d --build
