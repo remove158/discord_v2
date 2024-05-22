@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     bot:
-        build: .
+        image: remove158/discord:latest
         container_name: bot
         restart: unless-stopped
         links:
