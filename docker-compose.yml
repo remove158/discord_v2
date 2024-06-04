@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     bot:
-        build: .
+        image: remove158/discord:latest
         container_name: bot
         restart: unless-stopped
         links:
@@ -12,14 +12,9 @@ services:
         environment:
             - LAVALINK_NODES=lavalink://1:password@player:2333
     player:
-        build: ./lavalink
+        image: ghcr.io/lavalink-devs/lavalink:4.0.5
         container_name: player
         restart: unless-stopped
         volumes:
             # Mount application.yml for configuration (optional, see Lavalink documentation)
             - ./lavalink/application.yml:/opt/Lavalink/application.yml
-            # Persist plugins between restarts (optional, see Lavalink documentation)
-            - ./plugins/:/opt/Lavalink/plugins/
-        ports:
-            # Expose port for your application to connect (optional if container network is used)
-            - '2333:2333'

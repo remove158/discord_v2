@@ -40,4 +40,5 @@ type Event = {
 type BotClient = {
 	lavalink: LavalinkManager
 	commands: MiniMap<string, Command>
+	autoplay: MiniMap<string, boolean>
 } & Client
