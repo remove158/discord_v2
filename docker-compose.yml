@@ -11,10 +11,22 @@ services:
             - .env
         environment:
             - LAVALINK_NODES=lavalink://1:password@player:2333
+    test:
+        build: .
+        container_name: bot
+        restart: unless-stopped
+        links:
+            - player
+        env_file:
+            - .env
+        environment:
+            - LAVALINK_NODES=lavalink://1:password@player:2333
     player:
         image: ghcr.io/lavalink-devs/lavalink:4.0.5
         container_name: player
         restart: unless-stopped
+        ports:
+            - 2333:2333
         volumes:
             # Mount application.yml for configuration (optional, see Lavalink documentation)
             - ./lavalink/application.yml:/opt/Lavalink/application.yml
